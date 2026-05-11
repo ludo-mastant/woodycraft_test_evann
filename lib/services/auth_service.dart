@@ -1,5 +1,7 @@
+// Appels API pour l'authentification.
 import 'api_service.dart';
 
+// Service de connexion et d'inscription.
 class AuthService {
   final ApiService _api;
 

@@ -1,3 +1,4 @@
+// Écran de gestion des commandes.
 import 'package:flutter/material.dart';
 
 import '../composants/app_colors.dart';
@@ -6,6 +7,7 @@ import '../modeles/commande.dart';
 import '../services/commandes_service.dart';
 import 'order_detail_page.dart';
 
+// Page de gestion des commandes.
 class AdminOrdersPage extends StatefulWidget {
   const AdminOrdersPage({super.key});
 
@@ -14,6 +16,7 @@ class AdminOrdersPage extends StatefulWidget {
   State<AdminOrdersPage> createState() => _AdminOrdersPageState();
 }
 
+// Charge les commandes et gère les actions.
 class _AdminOrdersPageState extends State<AdminOrdersPage> {
   final _service = const CommandesService();
   late Future<List<Commande>> _futureCommandes;

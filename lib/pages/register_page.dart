@@ -1,9 +1,11 @@
+// Écran d'inscription.
 import 'package:flutter/material.dart';
 
 import '../composants/app_colors.dart';
 import '../services/auth_service.dart';
 import 'admin_home_page.dart';
 
+// Page de création de compte.
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
@@ -12,6 +14,7 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
+// Gère le formulaire d'inscription.
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();

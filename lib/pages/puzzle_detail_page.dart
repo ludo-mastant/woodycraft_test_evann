@@ -1,9 +1,11 @@
+// Écran du détail puzzle.
 import 'package:flutter/material.dart';
 
 import '../composants/app_colors.dart';
 import '../modeles/puzzle.dart';
 import 'create_puzzle_page.dart';
 
+// Page de détail d'un puzzle.
 class PuzzleDetailPage extends StatelessWidget {
   final Puzzle puzzle;
 

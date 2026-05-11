@@ -1,6 +1,8 @@
+// Appels API pour les puzzles.
 import '../modeles/puzzle.dart';
 import 'api_service.dart';
 
+// Service des appels liés aux puzzles.
 class PuzzleService {
   final ApiService _api;
 

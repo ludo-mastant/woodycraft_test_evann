@@ -1,9 +1,11 @@
+// Écran du formulaire puzzle.
 import 'package:flutter/material.dart';
 
 import '../composants/app_colors.dart';
 import '../modeles/puzzle.dart';
 import '../services/puzzle_service.dart';
 
+// Page de création ou modification d'un puzzle.
 class CreatePuzzlePage extends StatefulWidget {
   final Puzzle? puzzle;
 
@@ -14,6 +16,7 @@ class CreatePuzzlePage extends StatefulWidget {
   State<CreatePuzzlePage> createState() => _CreatePuzzlePageState();
 }
 
+// Gère le formulaire du puzzle.
 class _CreatePuzzlePageState extends State<CreatePuzzlePage> {
   final _formKey = GlobalKey<FormState>();
   final _service = const PuzzleService();

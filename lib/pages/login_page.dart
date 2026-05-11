@@ -1,3 +1,4 @@
+// Écran de connexion.
 import 'package:flutter/material.dart';
 
 import '../composants/app_colors.dart';
@@ -5,6 +6,7 @@ import '../services/auth_service.dart';
 import 'admin_home_page.dart';
 import 'register_page.dart';
 
+// Page de connexion admin.
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -13,6 +15,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
+// Gère les champs et l'appel de connexion.
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();

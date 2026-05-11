@@ -1,3 +1,4 @@
+// Écran du tableau de bord admin.
 import 'package:flutter/material.dart';
 
 import '../composants/app_colors.dart';
@@ -5,6 +6,7 @@ import '../composants/message_views.dart';
 import '../modeles/dashboard_resume.dart';
 import '../services/admin_dashboard_service.dart';
 
+// Page des statistiques admin.
 class AdminDashboardPage extends StatefulWidget {
   const AdminDashboardPage({super.key});
 
@@ -13,6 +15,7 @@ class AdminDashboardPage extends StatefulWidget {
   State<AdminDashboardPage> createState() => _AdminDashboardPageState();
 }
 
+// Charge et affiche les chiffres du dashboard.
 class _AdminDashboardPageState extends State<AdminDashboardPage> {
   final _dashboardService = const AdminDashboardService();
   late Future<DashboardResume> _futureResume;

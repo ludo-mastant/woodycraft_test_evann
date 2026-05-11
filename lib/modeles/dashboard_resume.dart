@@ -1,5 +1,7 @@
+// Modèle du résumé dashboard.
 import '../services/api_service.dart';
 
+// Résumé des chiffres du tableau de bord.
 class DashboardResume {
   final int commandesEnAttente;
   final int puzzlesStockBas;

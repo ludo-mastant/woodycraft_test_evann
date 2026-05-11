@@ -1,3 +1,4 @@
+// Lance l'application Flutter.
 import 'package:flutter/material.dart';
 
 import 'composants/app_colors.dart';
@@ -8,6 +9,7 @@ void main() {
   runApp(const MyApp());
 }
 
+// Point de départ visuel de l'application.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

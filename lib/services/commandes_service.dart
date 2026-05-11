@@ -1,6 +1,8 @@
+// Appels API pour les commandes.
 import '../modeles/commande.dart';
 import 'api_service.dart';
 
+// Service des appels liés aux commandes.
 class CommandesService {
   final ApiService _api;
 

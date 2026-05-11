@@ -1,3 +1,4 @@
+// Écran principal admin.
 import 'package:flutter/material.dart';
 
 import '../composants/app_colors.dart';
@@ -6,6 +7,7 @@ import 'admin_orders_page.dart';
 import 'puzzle_list_page.dart';
 import 'stocks_page.dart';
 
+// Page principale avec la navigation admin.
 class AdminHomePage extends StatefulWidget {
   const AdminHomePage({super.key});
 
@@ -14,6 +16,7 @@ class AdminHomePage extends StatefulWidget {
   State<AdminHomePage> createState() => _AdminHomePageState();
 }
 
+// Change la page active du menu.
 class _AdminHomePageState extends State<AdminHomePage> {
   int _currentIndex = 0;
 

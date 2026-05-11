@@ -1,3 +1,4 @@
+// Écran de liste des puzzles.
 import 'package:flutter/material.dart';
 
 import '../composants/app_colors.dart';
@@ -7,6 +8,7 @@ import '../services/puzzle_service.dart';
 import 'create_puzzle_page.dart';
 import 'puzzle_detail_page.dart';
 
+// Page de liste des puzzles.
 class PuzzleListPage extends StatefulWidget {
   const PuzzleListPage({super.key});
 
@@ -15,6 +17,7 @@ class PuzzleListPage extends StatefulWidget {
   State<PuzzleListPage> createState() => _PuzzleListPageState();
 }
 
+// Charge, ouvre, modifie ou supprime les puzzles.
 class _PuzzleListPageState extends State<PuzzleListPage> {
   final _puzzleService = const PuzzleService();
   late Future<List<Puzzle>> _futurePuzzles;

@@ -1,5 +1,7 @@
+// Modèle utilisé pour les puzzles.
 import '../services/api_service.dart';
 
+// Puzzle affiché et modifié dans l'admin.
 class Puzzle {
   final int id;
   final String nom;

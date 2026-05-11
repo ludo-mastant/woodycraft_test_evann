@@ -1,7 +1,9 @@
+// Petits widgets pour les états simples.
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 
+// Affichage simple pendant le chargement.
 class LoadingView extends StatelessWidget {
   const LoadingView({super.key});
 
@@ -12,6 +14,7 @@ class LoadingView extends StatelessWidget {
   }
 }
 
+// Affiche une erreur avec un bouton pour réessayer.
 class ErrorView extends StatelessWidget {
   final Object error;
   final VoidCallback? onRetry;
@@ -49,6 +52,7 @@ class ErrorView extends StatelessWidget {
   }
 }
 
+// Affiche un message quand il n'y a rien à montrer.
 class EmptyView extends StatelessWidget {
   final String message;
 

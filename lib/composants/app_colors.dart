@@ -1,5 +1,7 @@
+// Fichier des couleurs communes.
 import 'package:flutter/material.dart';
 
+// Couleurs utilisées dans toute l'application.
 class AppColors {
   static const Color background = Color(0xFFFFE8CC);
   static const Color primary = Color(0xFF8B6F47);

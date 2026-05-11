@@ -1,3 +1,4 @@
+// Écran de gestion des stocks.
 import 'package:flutter/material.dart';
 
 import '../composants/app_colors.dart';
@@ -5,6 +6,7 @@ import '../composants/message_views.dart';
 import '../modeles/puzzle.dart';
 import '../services/puzzle_service.dart';
 
+// Page de gestion des stocks.
 class StocksPage extends StatefulWidget {
   const StocksPage({super.key});
 
@@ -13,6 +15,7 @@ class StocksPage extends StatefulWidget {
   State<StocksPage> createState() => _StocksPageState();
 }
 
+// Charge les puzzles et met à jour les stocks.
 class _StocksPageState extends State<StocksPage> {
   final _service = const PuzzleService();
   late Future<List<Puzzle>> _futurePuzzles;

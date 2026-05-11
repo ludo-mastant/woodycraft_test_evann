@@ -1,8 +1,10 @@
+// Base commune pour parler à Laravel.
 import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+// Erreur renvoyée quand l'API répond mal.
 class ApiException implements Exception {
   final String message;
   final int? statusCode;
@@ -14,6 +16,7 @@ class ApiException implements Exception {
   String toString() => message;
 }
 
+// Client HTTP commun pour toutes les requêtes API.
 class ApiService {
   static const String baseUrl = String.fromEnvironment(
     'API_URL',

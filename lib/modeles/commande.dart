@@ -1,5 +1,7 @@
+// Modèles utilisés pour les commandes.
 import '../services/api_service.dart';
 
+// Ligne de produit dans une commande.
 class CommandeItem {
   final int puzzleId;
   final String nom;
@@ -34,6 +36,7 @@ class CommandeItem {
   double get sousTotal => prix * quantite;
 }
 
+// Client lié à une commande.
 class CommandeClient {
   final int id;
   final String nom;
@@ -58,6 +61,7 @@ class CommandeClient {
   }
 }
 
+// Adresse utilisée pour la livraison.
 class AdresseLivraison {
   final String rue;
   final String ville;
@@ -88,6 +92,7 @@ class AdresseLivraison {
   }
 }
 
+// Commande complète reçue depuis l'API.
 class Commande {
   final int id;
   final String statut;

@@ -1,3 +1,4 @@
+// Écran du détail commande.
 import 'package:flutter/material.dart';
 
 import '../composants/app_colors.dart';
@@ -5,6 +6,7 @@ import '../composants/message_views.dart';
 import '../modeles/commande.dart';
 import '../services/commandes_service.dart';
 
+// Page de détail d'une commande.
 class OrderDetailPage extends StatefulWidget {
   final int commandeId;
 
@@ -15,6 +17,7 @@ class OrderDetailPage extends StatefulWidget {
   State<OrderDetailPage> createState() => _OrderDetailPageState();
 }
 
+// Charge et affiche le détail d'une commande.
 class _OrderDetailPageState extends State<OrderDetailPage> {
   final _service = const CommandesService();
   late Future<Commande> _futureCommande;

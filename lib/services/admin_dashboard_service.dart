@@ -1,6 +1,8 @@
+// Appels API pour le dashboard.
 import '../modeles/dashboard_resume.dart';
 import 'api_service.dart';
 
+// Service des données du dashboard.
 class AdminDashboardService {
   final ApiService _api;
 
