@@ -1,46 +1,63 @@
 import 'package:flutter/material.dart';
 
-import '../models/puzzle.dart';
+import '../composants/app_colors.dart';
+import '../composants/message_views.dart';
+import '../modeles/puzzle.dart';
 import '../services/puzzle_service.dart';
-import '../widgets/app_colors.dart';
-import '../widgets/message_views.dart';
-import 'puzzle_form_screen.dart';
+import 'create_puzzle_page.dart';
+import 'puzzle_detail_page.dart';
 
-class PuzzlesScreen extends StatefulWidget {
-  const PuzzlesScreen({super.key});
+class PuzzleListPage extends StatefulWidget {
+  const PuzzleListPage({super.key});
 
+  // Crée l'état de la page.
   @override
-  State<PuzzlesScreen> createState() => _PuzzlesScreenState();
+  State<PuzzleListPage> createState() => _PuzzleListPageState();
 }
 
-class _PuzzlesScreenState extends State<PuzzlesScreen> {
+class _PuzzleListPageState extends State<PuzzleListPage> {
   final _puzzleService = const PuzzleService();
   late Future<List<Puzzle>> _futurePuzzles;
 
+  // Charge au démarrage.
   @override
   void initState() {
     super.initState();
     _load();
   }
 
+  // Charge les puzzles.
   void _load() {
     _futurePuzzles = _puzzleService.fetchPuzzles();
   }
 
+  // Recharge la liste.
   Future<void> _refresh() async {
     setState(_load);
     await _futurePuzzles;
   }
 
+  // Ouvre le formulaire.
   Future<void> _openForm([Puzzle? puzzle]) async {
     final saved = await Navigator.push<bool>(
       context,
-      MaterialPageRoute(builder: (_) => PuzzleFormScreen(puzzle: puzzle)),
+      MaterialPageRoute(builder: (_) => CreatePuzzlePage(puzzle: puzzle)),
     );
 
     if (saved == true) setState(_load);
   }
 
+  // Ouvre le détail.
+  Future<void> _openDetail(Puzzle puzzle) async {
+    final changed = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute(builder: (_) => PuzzleDetailPage(puzzle: puzzle)),
+    );
+
+    if (changed == true) setState(_load);
+  }
+
+  // Supprime après confirmation.
   Future<void> _deletePuzzle(Puzzle puzzle) async {
     final confirm = await showDialog<bool>(
       context: context,
@@ -77,6 +94,7 @@ class _PuzzlesScreenState extends State<PuzzlesScreen> {
     }
   }
 
+  // Affiche la liste.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,7 +137,7 @@ class _PuzzlesScreenState extends State<PuzzlesScreen> {
                     subtitle: Text(
                       '${puzzle.prix.toStringAsFixed(2)} € • Stock : ${puzzle.stock} • Catégorie : ${puzzle.categorieId}',
                     ),
-                    onTap: () => _openForm(puzzle),
+                    onTap: () => _openDetail(puzzle),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete_outline, color: AppColors.danger),
                       onPressed: () => _deletePuzzle(puzzle),

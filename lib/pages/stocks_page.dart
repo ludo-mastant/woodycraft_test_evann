@@ -1,36 +1,41 @@
 import 'package:flutter/material.dart';
 
-import '../models/puzzle.dart';
+import '../composants/app_colors.dart';
+import '../composants/message_views.dart';
+import '../modeles/puzzle.dart';
 import '../services/puzzle_service.dart';
-import '../widgets/app_colors.dart';
-import '../widgets/message_views.dart';
 
-class StocksScreen extends StatefulWidget {
-  const StocksScreen({super.key});
+class StocksPage extends StatefulWidget {
+  const StocksPage({super.key});
 
+  // Crée l'état de la page.
   @override
-  State<StocksScreen> createState() => _StocksScreenState();
+  State<StocksPage> createState() => _StocksPageState();
 }
 
-class _StocksScreenState extends State<StocksScreen> {
+class _StocksPageState extends State<StocksPage> {
   final _service = const PuzzleService();
   late Future<List<Puzzle>> _futurePuzzles;
 
+  // Charge au démarrage.
   @override
   void initState() {
     super.initState();
     _load();
   }
 
+  // Charge les stocks.
   void _load() {
     _futurePuzzles = _service.fetchPuzzles();
   }
 
+  // Recharge la liste.
   Future<void> _refresh() async {
     setState(_load);
     await _futurePuzzles;
   }
 
+  // Change le stock.
   Future<void> _changeStock(Puzzle puzzle, int newStock) async {
     if (newStock < 0) return;
 
@@ -44,6 +49,7 @@ class _StocksScreenState extends State<StocksScreen> {
     }
   }
 
+  // Affiche les stocks.
   @override
   Widget build(BuildContext context) {
     return Scaffold(

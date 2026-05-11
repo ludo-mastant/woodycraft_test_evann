@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
+import '../composants/app_colors.dart';
 import '../services/auth_service.dart';
-import '../widgets/app_colors.dart';
-import 'home_screen.dart';
+import 'admin_home_page.dart';
+import 'register_page.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
+  // Crée l'état de la page.
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _authService = const AuthService();
@@ -22,15 +23,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _obscurePassword = true;
   String? _errorMessage;
 
+  // Nettoie les champs.
   @override
   void dispose() {
-    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  Future<void> _register() async {
+  // Tente la connexion.
+  Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() {
@@ -39,17 +41,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
 
     try {
-      await _authService.register(
-        name: _nameController.text.trim(),
-        email: _emailController.text.trim(),
-        password: _passwordController.text,
+      final token = await _authService.login(
+        _emailController.text.trim(),
+        _passwordController.text,
       );
 
       if (!mounted) return;
-      Navigator.pushAndRemoveUntil(
+
+      if (token == null || token.isEmpty) {
+        setState(() => _errorMessage = 'Email ou mot de passe incorrect.');
+        return;
+      }
+
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const MainNavigationPage()),
-        (_) => false,
+        MaterialPageRoute(builder: (_) => const AdminHomePage()),
       );
     } catch (e) {
       if (!mounted) return;
@@ -59,10 +65,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
+  // Affiche le formulaire.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Créer un compte')),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -73,17 +79,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Nom',
-                      prefixIcon: Icon(Icons.person_outline),
+                  const Icon(Icons.admin_panel_settings, size: 64, color: AppColors.primary),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'WoodyCraft Admin',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.text,
                     ),
-                    validator: (value) => value == null || value.trim().isEmpty
-                        ? 'Nom obligatoire'
-                        : null,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 32),
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -91,9 +98,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       labelText: 'Email',
                       prefixIcon: Icon(Icons.email_outlined),
                     ),
-                    validator: (value) => value == null || value.trim().isEmpty
-                        ? 'Email obligatoire'
-                        : null,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Email obligatoire';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
@@ -111,9 +121,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                     ),
-                    validator: (value) => value == null || value.isEmpty
-                        ? 'Mot de passe obligatoire'
-                        : null,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Mot de passe obligatoire';
+                      }
+                      return null;
+                    },
                   ),
                   if (_errorMessage != null) ...[
                     const SizedBox(height: 12),
@@ -125,15 +138,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                   const SizedBox(height: 20),
                   FilledButton.icon(
-                    onPressed: _isLoading ? null : _register,
+                    onPressed: _isLoading ? null : _login,
                     icon: _isLoading
                         ? const SizedBox(
                             width: 18,
                             height: 18,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
-                        : const Icon(Icons.person_add_alt_1),
-                    label: const Text('Créer le compte'),
+                        : const Icon(Icons.login),
+                    label: const Text('Se connecter'),
+                  ),
+                  TextButton(
+                    onPressed: _isLoading
+                        ? null
+                        : () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => const RegisterPage()),
+                            );
+                          },
+                    child: const Text('Créer un compte'),
                   ),
                 ],
               ),

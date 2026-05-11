@@ -5,6 +5,7 @@ import 'app_colors.dart';
 class LoadingView extends StatelessWidget {
   const LoadingView({super.key});
 
+  // Affiche le chargement.
   @override
   Widget build(BuildContext context) {
     return const Center(child: CircularProgressIndicator());
@@ -17,6 +18,7 @@ class ErrorView extends StatelessWidget {
 
   const ErrorView({super.key, required this.error, this.onRetry});
 
+  // Affiche une erreur simple.
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -52,6 +54,7 @@ class EmptyView extends StatelessWidget {
 
   const EmptyView({super.key, required this.message});
 
+  // Affiche un message vide.
   @override
   Widget build(BuildContext context) {
     return Center(

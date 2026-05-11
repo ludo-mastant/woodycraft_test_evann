@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/app_colors.dart';
-import 'dashboard_screen.dart';
-import 'orders_screen.dart';
-import 'puzzles_screen.dart';
-import 'stocks_screen.dart';
+import '../composants/app_colors.dart';
+import 'admin_dashboard_page.dart';
+import 'admin_orders_page.dart';
+import 'puzzle_list_page.dart';
+import 'stocks_page.dart';
 
-class MainNavigationPage extends StatefulWidget {
-  const MainNavigationPage({super.key});
+class AdminHomePage extends StatefulWidget {
+  const AdminHomePage({super.key});
 
+  // Crée l'état de navigation.
   @override
-  State<MainNavigationPage> createState() => _MainNavigationPageState();
+  State<AdminHomePage> createState() => _AdminHomePageState();
 }
 
-class _MainNavigationPageState extends State<MainNavigationPage> {
+class _AdminHomePageState extends State<AdminHomePage> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = const [
-    DashboardScreen(),
-    PuzzlesScreen(),
-    OrdersScreen(),
-    StocksScreen(),
+    AdminDashboardPage(),
+    PuzzleListPage(),
+    AdminOrdersPage(),
+    StocksPage(),
   ];
 
+  // Affiche le menu du bas.
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
-import '../models/puzzle.dart';
+import '../composants/app_colors.dart';
+import '../modeles/puzzle.dart';
 import '../services/puzzle_service.dart';
-import '../widgets/app_colors.dart';
 
-class PuzzleFormScreen extends StatefulWidget {
+class CreatePuzzlePage extends StatefulWidget {
   final Puzzle? puzzle;
 
-  const PuzzleFormScreen({super.key, this.puzzle});
+  const CreatePuzzlePage({super.key, this.puzzle});
 
+  // Crée l'état du formulaire.
   @override
-  State<PuzzleFormScreen> createState() => _PuzzleFormScreenState();
+  State<CreatePuzzlePage> createState() => _CreatePuzzlePageState();
 }
 
-class _PuzzleFormScreenState extends State<PuzzleFormScreen> {
+class _CreatePuzzlePageState extends State<CreatePuzzlePage> {
   final _formKey = GlobalKey<FormState>();
   final _service = const PuzzleService();
 
@@ -26,8 +27,10 @@ class _PuzzleFormScreenState extends State<PuzzleFormScreen> {
 
   bool _isSaving = false;
 
+  // Vérifie si on modifie.
   bool get _isEdit => widget.puzzle != null;
 
+  // Prépare les champs.
   @override
   void initState() {
     super.initState();
@@ -40,6 +43,7 @@ class _PuzzleFormScreenState extends State<PuzzleFormScreen> {
     _stockController = TextEditingController(text: puzzle?.stock.toString() ?? '0');
   }
 
+  // Nettoie les champs.
   @override
   void dispose() {
     _nomController.dispose();
@@ -51,6 +55,7 @@ class _PuzzleFormScreenState extends State<PuzzleFormScreen> {
     super.dispose();
   }
 
+  // Sauvegarde le puzzle.
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -87,11 +92,13 @@ class _PuzzleFormScreenState extends State<PuzzleFormScreen> {
     }
   }
 
+  // Champ obligatoire.
   String? _required(String? value) {
     if (value == null || value.trim().isEmpty) return 'Champ obligatoire';
     return null;
   }
 
+  // Vérifie un nombre.
   String? _number(String? value) {
     if (value == null || value.trim().isEmpty) return 'Champ obligatoire';
     final cleaned = value.replaceAll(',', '.');
@@ -99,12 +106,14 @@ class _PuzzleFormScreenState extends State<PuzzleFormScreen> {
     return null;
   }
 
+  // Vérifie un entier.
   String? _integer(String? value) {
     if (value == null || value.trim().isEmpty) return 'Champ obligatoire';
     if (int.tryParse(value) == null) return 'Nombre entier invalide';
     return null;
   }
 
+  // Affiche le formulaire.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,7 +174,7 @@ class _PuzzleFormScreenState extends State<PuzzleFormScreen> {
             ),
             const SizedBox(height: 8),
             const Text(
-              'Code volontairement simple : les champs correspondent directement aux colonnes principales de l’API.',
+              'Simple : les champs suivent les colonnes principales de l’API.',
               textAlign: TextAlign.center,
               style: TextStyle(color: AppColors.muted),
             ),

@@ -1,36 +1,41 @@
 import 'package:flutter/material.dart';
 
-import '../models/dashboard_resume.dart';
-import '../services/dashboard_service.dart';
-import '../widgets/app_colors.dart';
-import '../widgets/message_views.dart';
+import '../composants/app_colors.dart';
+import '../composants/message_views.dart';
+import '../modeles/dashboard_resume.dart';
+import '../services/admin_dashboard_service.dart';
 
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+class AdminDashboardPage extends StatefulWidget {
+  const AdminDashboardPage({super.key});
 
+  // Crée l'état de la page.
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  State<AdminDashboardPage> createState() => _AdminDashboardPageState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
-  final _dashboardService = const DashboardService();
+class _AdminDashboardPageState extends State<AdminDashboardPage> {
+  final _dashboardService = const AdminDashboardService();
   late Future<DashboardResume> _futureResume;
 
+  // Charge au démarrage.
   @override
   void initState() {
     super.initState();
     _load();
   }
 
+  // Charge les stats.
   void _load() {
     _futureResume = _dashboardService.fetchResume();
   }
 
+  // Recharge la page.
   Future<void> _refresh() async {
     setState(_load);
     await _futureResume;
   }
 
+  // Affiche le dashboard.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,13 +95,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // Affiche le titre.
   Widget _headerCard() {
-    return Card(
+    return const Card(
       child: Padding(
-        padding: const EdgeInsets.all(18),
+        padding: EdgeInsets.all(18),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Icon(Icons.admin_panel_settings, color: AppColors.primary, size: 34),
             SizedBox(height: 12),
             Text(
@@ -111,6 +117,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // Affiche une statistique.
   Widget _statCard({
     required String title,
     required String value,

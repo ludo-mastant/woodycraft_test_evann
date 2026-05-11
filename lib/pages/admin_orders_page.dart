@@ -1,37 +1,42 @@
 import 'package:flutter/material.dart';
 
-import '../models/commande.dart';
-import '../services/commande_service.dart';
-import '../widgets/app_colors.dart';
-import '../widgets/message_views.dart';
-import 'order_detail_screen.dart';
+import '../composants/app_colors.dart';
+import '../composants/message_views.dart';
+import '../modeles/commande.dart';
+import '../services/commandes_service.dart';
+import 'order_detail_page.dart';
 
-class OrdersScreen extends StatefulWidget {
-  const OrdersScreen({super.key});
+class AdminOrdersPage extends StatefulWidget {
+  const AdminOrdersPage({super.key});
 
+  // Crée l'état de la page.
   @override
-  State<OrdersScreen> createState() => _OrdersScreenState();
+  State<AdminOrdersPage> createState() => _AdminOrdersPageState();
 }
 
-class _OrdersScreenState extends State<OrdersScreen> {
-  final _service = const CommandeService();
+class _AdminOrdersPageState extends State<AdminOrdersPage> {
+  final _service = const CommandesService();
   late Future<List<Commande>> _futureCommandes;
 
+  // Charge au démarrage.
   @override
   void initState() {
     super.initState();
     _load();
   }
 
+  // Charge les commandes.
   void _load() {
     _futureCommandes = _service.fetchCommandes();
   }
 
+  // Recharge la liste.
   Future<void> _refresh() async {
     setState(_load);
     await _futureCommandes;
   }
 
+  // Choisit la couleur statut.
   Color _statusColor(String status) {
     final value = status.toLowerCase();
     if (value.contains('valid')) return AppColors.success;
@@ -40,6 +45,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     return AppColors.warning;
   }
 
+  // Lance une action API.
   Future<void> _runAction(Future<void> Function() action) async {
     try {
       await action();
@@ -51,6 +57,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     }
   }
 
+  // Demande avant suppression.
   Future<void> _delete(Commande commande) async {
     final confirm = await showDialog<bool>(
       context: context,
@@ -75,6 +82,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     }
   }
 
+  // Affiche les commandes.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,6 +120,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     );
   }
 
+  // Affiche une commande.
   Widget _orderCard(Commande commande) {
     final color = _statusColor(commande.statut);
 
@@ -152,7 +161,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => OrderDetailScreen(commandeId: commande.id),
+                        builder: (_) => OrderDetailPage(commandeId: commande.id),
                       ),
                     );
                   },

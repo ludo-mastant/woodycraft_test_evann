@@ -1,4 +1,4 @@
-import '../core/json_helper.dart';
+import '../services/api_service.dart';
 
 class Puzzle {
   final int id;
@@ -19,6 +19,7 @@ class Puzzle {
     required this.stock,
   });
 
+  // Crée un puzzle depuis l'API.
   factory Puzzle.fromJson(Map<String, dynamic> json) {
     return Puzzle(
       id: readInt(json['id']),
@@ -31,6 +32,7 @@ class Puzzle {
     );
   }
 
+  // Prépare l'envoi API.
   Map<String, dynamic> toJson() {
     return {
       'nom': nom,
@@ -42,6 +44,7 @@ class Puzzle {
     };
   }
 
+  // Copie avec changements.
   Puzzle copyWith({
     int? id,
     String? nom,

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'screens/login_screen.dart';
-import 'widgets/app_colors.dart';
+import 'composants/app_colors.dart';
+import 'pages/login_page.dart';
 
+// Lance l'application.
 void main() {
   runApp(const MyApp());
 }
@@ -10,6 +11,7 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // Prépare le thème et la page de départ.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
           fillColor: Colors.white,
         ),
       ),
-      home: const LoginScreen(),
+      home: const LoginPage(),
     );
   }
 }

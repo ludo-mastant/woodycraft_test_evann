@@ -1,4 +1,4 @@
-import '../core/json_helper.dart';
+import '../services/api_service.dart';
 
 class CommandeItem {
   final int puzzleId;
@@ -13,6 +13,7 @@ class CommandeItem {
     required this.prix,
   });
 
+  // Crée une ligne commande.
   factory CommandeItem.fromJson(Map<String, dynamic> json) {
     final puzzle = readMap(json['puzzle']);
 
@@ -29,6 +30,7 @@ class CommandeItem {
     );
   }
 
+  // Calcule le sous-total.
   double get sousTotal => prix * quantite;
 }
 
@@ -45,6 +47,7 @@ class CommandeClient {
     required this.telephone,
   });
 
+  // Crée le client.
   factory CommandeClient.fromJson(Map<String, dynamic> json) {
     return CommandeClient(
       id: readInt(json['id']),
@@ -68,6 +71,7 @@ class AdresseLivraison {
     required this.pays,
   });
 
+  // Crée l'adresse.
   factory AdresseLivraison.fromJson(Map<String, dynamic> json) {
     return AdresseLivraison(
       rue: readString(json['rue'] ?? json['adresse'] ?? json['address']),
@@ -77,6 +81,7 @@ class AdresseLivraison {
     );
   }
 
+  // Met l'adresse en texte.
   String get formatted {
     final parts = [rue, codePostal, ville, pays].where((part) => part.isNotEmpty);
     return parts.join(', ');
@@ -104,48 +109,24 @@ class Commande {
     required this.adresseLivraison,
   });
 
+  // Crée une commande depuis l'API.
   factory Commande.fromJson(Map<String, dynamic> json) {
-    final rawItems = readList(json['articles'] ?? json['items'] ?? json['lignes']);
-    final items = rawItems
-        .map((item) => CommandeItem.fromJson(readMap(item)))
-        .toList();
-
-    final clientMap = readMap(json['client']);
-    final adresseMap = readMap(json['adresse_livraison']);
-
-    CommandeClient? client;
-    if (clientMap.isNotEmpty) {
-      client = CommandeClient.fromJson(clientMap);
-    } else if (json['client_id'] != null || json['email'] != null || json['nom_client'] != null) {
-      client = CommandeClient(
-        id: readInt(json['client_id']),
-        nom: readString(json['nom_client'] ?? json['client_nom'], 'Client inconnu'),
-        email: readString(json['email']),
-        telephone: readString(json['telephone']),
-      );
-    }
-
-    AdresseLivraison? adresseLivraison;
-    if (adresseMap.isNotEmpty) {
-      adresseLivraison = AdresseLivraison.fromJson(adresseMap);
-    } else if (json['rue'] != null || json['ville'] != null || json['code_postal'] != null) {
-      adresseLivraison = AdresseLivraison.fromJson(json);
-    }
-
-    double total = readDouble(json['total']);
-    if (total == 0 && items.isNotEmpty) {
-      total = items.fold<double>(0, (sum, item) => sum + item.sousTotal);
-    }
+    final clientJson = readMap(json['client'] ?? json['user']);
+    final adresseJson = readMap(json['adresse_livraison'] ?? json['adresse']);
+    final rawItems = readList(
+      json['items'] ?? json['lignes'] ?? json['details'] ?? json['puzzles'],
+    );
 
     return Commande(
       id: readInt(json['id']),
-      statut: readString(json['statut'] ?? json['status'], 'en cours'),
-      total: total,
-      items: items,
+      statut: readString(json['statut'] ?? json['status'], 'en attente'),
+      total: readDouble(json['total'] ?? json['montant_total'] ?? json['amount']),
+      items: rawItems.map((item) => CommandeItem.fromJson(readMap(item))).toList(),
       modePaiement: readString(json['mode_paiement'] ?? json['payment_method']),
-      dateCommande: readString(json['date_commande'] ?? json['created_at']),
-      client: client,
-      adresseLivraison: adresseLivraison,
+      dateCommande: readString(json['created_at'] ?? json['date_commande']),
+      client: clientJson.isEmpty ? null : CommandeClient.fromJson(clientJson),
+      adresseLivraison:
+          adresseJson.isEmpty ? null : AdresseLivraison.fromJson(adresseJson),
     );
   }
 }

@@ -1,11 +1,11 @@
-import '../core/api_client.dart';
-import '../core/json_helper.dart';
+import 'api_service.dart';
 
 class AuthService {
-  final ApiClient _api;
+  final ApiService _api;
 
-  const AuthService({ApiClient api = const ApiClient()}) : _api = api;
+  const AuthService({ApiService api = const ApiService()}) : _api = api;
 
+  // Connecte un utilisateur.
   Future<String?> login(String email, String password) async {
     final data = await _api.post('login', {
       'email': email,
@@ -17,6 +17,7 @@ class AuthService {
     return token?.toString();
   }
 
+  // Crée un compte.
   Future<void> register({
     required String name,
     required String email,

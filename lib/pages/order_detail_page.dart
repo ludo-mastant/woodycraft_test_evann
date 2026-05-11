@@ -1,33 +1,37 @@
 import 'package:flutter/material.dart';
 
-import '../models/commande.dart';
-import '../services/commande_service.dart';
-import '../widgets/app_colors.dart';
-import '../widgets/message_views.dart';
+import '../composants/app_colors.dart';
+import '../composants/message_views.dart';
+import '../modeles/commande.dart';
+import '../services/commandes_service.dart';
 
-class OrderDetailScreen extends StatefulWidget {
+class OrderDetailPage extends StatefulWidget {
   final int commandeId;
 
-  const OrderDetailScreen({super.key, required this.commandeId});
+  const OrderDetailPage({super.key, required this.commandeId});
 
+  // Crée l'état de la page.
   @override
-  State<OrderDetailScreen> createState() => _OrderDetailScreenState();
+  State<OrderDetailPage> createState() => _OrderDetailPageState();
 }
 
-class _OrderDetailScreenState extends State<OrderDetailScreen> {
-  final _service = const CommandeService();
+class _OrderDetailPageState extends State<OrderDetailPage> {
+  final _service = const CommandesService();
   late Future<Commande> _futureCommande;
 
+  // Charge au démarrage.
   @override
   void initState() {
     super.initState();
     _load();
   }
 
+  // Charge la commande.
   void _load() {
     _futureCommande = _service.fetchCommandeDetail(widget.commandeId);
   }
 
+  // Affiche le détail.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +72,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     );
   }
 
+  // Affiche les infos.
   Widget _infoCard(Commande commande) {
     return Card(
       child: Padding(
@@ -89,6 +94,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     );
   }
 
+  // Affiche le client.
   Widget _clientCard(CommandeClient? client) {
     return Card(
       child: ListTile(
@@ -102,6 +108,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     );
   }
 
+  // Affiche l'adresse.
   Widget _addressCard(AdresseLivraison? adresse) {
     return Card(
       child: ListTile(
@@ -114,6 +121,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     );
   }
 
+  // Affiche un article.
   Widget _itemCard(CommandeItem item) {
     return Card(
       child: ListTile(

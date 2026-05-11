@@ -1,4 +1,4 @@
-import '../core/json_helper.dart';
+import '../services/api_service.dart';
 
 class DashboardResume {
   final int commandesEnAttente;
@@ -13,6 +13,7 @@ class DashboardResume {
     required this.totalClients,
   });
 
+  // Crée le résumé depuis l'API.
   factory DashboardResume.fromJson(Map<String, dynamic> json) {
     return DashboardResume(
       commandesEnAttente: readInt(
@@ -22,7 +23,9 @@ class DashboardResume {
         json['puzzles_stock_bas'] ?? json['stock_bas'] ?? json['puzzlesStockBas'],
       ),
       chiffreAffaireMois: readDouble(
-        json['chiffre_affaire_mois'] ?? json['ventes_mois'] ?? json['chiffreAffaireMois'],
+        json['chiffre_affaire_mois'] ??
+            json['ventes_mois'] ??
+            json['chiffreAffaireMois'],
       ),
       totalClients: readInt(json['total_clients'] ?? json['totalClients']),
     );
