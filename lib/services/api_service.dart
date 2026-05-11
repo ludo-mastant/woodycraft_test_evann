@@ -20,7 +20,7 @@ class ApiException implements Exception {
 class ApiService {
   static const String baseUrl = String.fromEnvironment(
     'API_URL',
-    defaultValue: 'http://127.0.0.1:8080/api',
+    defaultValue: 'http://127.0.0.1:8000/api',
   );
 
   static const Duration timeout = Duration(seconds: 10);
